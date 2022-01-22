@@ -2,17 +2,19 @@ terraform {
   required_providers {
       aws = {
           source = "hashicorp/aws"
-          version = "3.7"
+          version = "~>3.7"
       }
   }
 }
 
 provider "aws"{
+    shared_credentials_file = "/home/kelebra/.aws/credentials"
+    profile = "default"
     region = "us-east-1"
 }
 
 module "webserver"{
-    source = "./module/ec2"
+    source = "./modules/ec2"
     servername = "terraformdemo"
-    sice       = "t3.micro"
+    size       = "t3.micro"
 }
