@@ -36,7 +36,7 @@ data "aws_ami" "ubuntu2"{
 resource "aws_instance" "web"{
     ami = data.aws_ami.ubuntu2.id
     instance_type = var.size
-    #key_name = "fercho_2"
+    key_name = "fercho_2"
     vpc_security_group_ids = [aws_security_group.allow_8080.id]
 
     user_data = <<-EOF
