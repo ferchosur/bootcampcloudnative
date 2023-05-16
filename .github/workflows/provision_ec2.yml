@@ -10,6 +10,7 @@ on:
 jobs:
   provision-ec2:
     runs-on: ubuntu-latest
+    needs: [KICS]
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -35,3 +36,19 @@ jobs:
           terraform validate
           terraform plan 
           terraform apply -auto-approve
+  KICS:
+    runs-on: ubuntu-latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+      # Scan Iac with kics
+      - name: run kics Scan
+        uses: checkmarx/kics-github-action@v1.7.0
+        with:
+          # scanning two directories: ./terraform/ ./cfn-templates/ plus a single file
+          path: 'terraform,cfn-templates,my-other-sub-folder/Dockerfile'
+          output_path: myResults/
+      # Display the results in json format
+      - name: display kics results
+        run: |
+          cat myResults/results.json
