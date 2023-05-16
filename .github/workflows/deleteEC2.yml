@@ -31,4 +31,4 @@ jobs:
           TF_VAR_ec2_name:  "${{ github.event.inputs.ec2-name }}"
         run: |
           cd code/Terraform/cloudsecITM/
-          terraform detroy
+          terraform destroy
